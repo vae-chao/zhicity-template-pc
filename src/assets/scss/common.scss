@@ -1,0 +1,122 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
+  outline: none;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  box-sizing: border-box;
+}
+
+div,
+span,
+em,
+p {
+  box-sizing: border-box;
+  font-style: normal;
+  user-select: none;
+}
+
+html,
+body {
+  margin: 0;
+  @include wh(100%, 100%);
+  @include wh(100vw, 100vh);
+  min-height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app {
+  @include wh(100%, 100%);
+  @include wh(100vw, 100vh);
+  min-height: 100%;
+  min-height: 100vh;
+  @include fonts(14px, 14px, $fontColorBlack03);
+  background: $bgColorGray;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// placeholder 的样式统一
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  @include placeSty();
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  @include placeSty();
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  @include placeSty();
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  @include placeSty();
+}
+
+/*.el-textarea .el-textarea__inner {
+    @include placeSty();
+    color: initial !important;
+}*/
+
+// 伪类清除浮动
+.clearfix {
+  &::after {
+    display: block;
+    content: "clear";
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
+  }
+}
+
+// 给input和日期控件里面的input 加个高度限制-针对IE的
+.el-date-editor .el-range-input, .el-date-editor .el-range-separator {
+  height: 16px !important \9
+;
+}
+
+.el-date-editor .el-range-separator {
+  width: auto !important;
+}
+
+// --清除IE下的 search 叉号
+::-ms-clear {
+  display: none;
+}
+
+::-ms-reveal {
+  display: none;
+}
+
+::-o-clear {
+  display: none;
+}

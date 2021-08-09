@@ -1,0 +1,68 @@
+// 背景图片地址和大小
+@mixin bis($url:null) {
+  background: url($url) no-repeat center center;
+  background-size: auto auto;
+}
+
+//宽高
+@mixin wh($width:null, $height:null) {
+  width: $width;
+  height: $height;
+}
+
+// 字体
+@mixin fonts($size:null, $line-height:null, $color:#666, $family:'PingFangSC-Regular') {
+  font: #{$size}/#{$line-height} $family;
+  color: $color;
+  font-family: 'PingFangSC-Regular', 'Microsoft YaHei';
+}
+
+// placeholder样式
+@mixin placeSty {
+  color: $holderColorGray !important;
+  font-size: 14px !important;
+  font-family: 'PingFangSC-Regular', 'Microsoft YaHei' !important;
+}
+
+// 定位居中
+@mixin positionCenter($position:relative,$marL:null,$marT:null) {
+  position: $position;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// table居中
+@mixin tableCellCenter() {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+//== 背景颜色
+$bgColorGray:#F5F7FA;
+$bgColorGray2: #F9F9F9;
+$bgColorGray2: #F6F6F6;
+//== 白色
+$colorWhite:#fff;
+//== 按钮蓝、边框获取焦点以后的蓝
+$basicColorBlue:#003CFF;
+$buttonColorHover: #92ACFF;
+$buttonColorClick: #0035E0;
+//== 灰色边框，按钮的和input的
+$borderColorGray:#E8E8E8;
+$borderColorGrayHover:#CCCCCC;
+//== input的placeholder颜色
+$holderColorGray:#CCCCCC;
+
+//== 文字类型的黑色，一黑二黑三黑-由深至浅
+$fontColorBlack01: #000;
+$fontColorBlack02: #333;
+$fontColorBlack03: #666;
+$fontColorBlack04: #999;
+$fontColorBlack05: #ccc;
+// 半透明颜色
+$opacityColor01: rgba(0,0,0,.85);
+$opacityColor02: rgba(0,0,0,.65);
+$opacityColor03: rgba(0,0,0,.45);
+$opacityColor04: rgba(0,0,0,.15);

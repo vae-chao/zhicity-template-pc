@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="" id="physical">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name=renderer content=webkit>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+<noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+<script src="<%= BASE_URL %>static/js/exif.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%= BASE_URL %>static/js/base64.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%= BASE_URL %>static/js/md5.js" type="text/javascript" charset="utf-8"></script>
+<!--pdf预览 start-->
+<script src="<%= BASE_URL %>static/js/pdfObject.min.js" type="text/javascript" charset="utf-8"></script>
+<!--pdf预览 end-->
+<!--触屏设备手势库 start-->
+<!--<script src="<%= BASE_URL %>static/js/hammer.min.js" type="text/javascript" charset="utf-8"></script>-->
+<!--触屏设备手势库 end-->
+</body>
+</html>
