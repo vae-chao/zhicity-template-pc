@@ -1,5 +1,8 @@
 <template>
     <div class="common-table">
+        <div class="search-condition">
+
+        </div>
         <el-table :data="data"
                   :max-height="maxHeight"
                   :height="height"
