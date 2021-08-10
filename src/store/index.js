@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {userInfoServiceAPI} from '@/request/api.js';
-import tokenUtil from "../utils/tokenUtil";
+import tokenUtil from "../utils/tokenUtil.js";
 import router from "../router";
 import {getPublicAndPrivateKey} from "../utils/PublicAndPrivateKey.js";
 

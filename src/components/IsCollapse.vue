@@ -3,20 +3,16 @@
 </template>
 
 <script>
-    import {useStore} from 'vuex';
-
     export default {
         name: 'IsCollapse',
-        setup() {
-            const store = useStore();
-
-            function onClickCollapse() {
-                store.commit('setIsCollapse');
-            }
-
+        data() {
             return {
-                onClickCollapse,
-                state: store.state
+                state: this.$store.state
+            }
+        },
+        methods: {
+            onClickCollapse() {
+                this.$store.commit('setIsCollapse')
             }
         }
     }

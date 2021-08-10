@@ -4,7 +4,14 @@ import router from './router';
 import store from './store';
 // ui 文件
 import ElementUi from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import './assets/scss/element-variables.scss';
+// 引入以上样式文件即可（无需引入 Element 编译好的 CSS 文件）
+// import 'element-ui/lib/theme-chalk/index.css';
+
+// 引入组定义组件
+import components from './components/comElement/index.js';
+
+Vue.use(components);
 
 // 动画样式文件
 import './assets/css/animate.min.css';

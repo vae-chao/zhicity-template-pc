@@ -25,7 +25,6 @@
         },
         data() {
             return {
-                isCollapse: this.$store.state.isCollapse,
                 menuList: []
             }
         },
@@ -38,6 +37,9 @@
             variablesStyle() {
                 return variables
             },
+            isCollapse() {
+                return this.$store.state.isCollapse
+            }
         },
         methods: {
             onSwitchRouter(index, indexPath) {

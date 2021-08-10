@@ -1,28 +1,4 @@
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
-p,
-blockquote,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-pre,
-form,
-fieldset,
-legend,
-button,
-input,
-textarea,
-th,
-td {
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
   outline: none;
   margin: 0;
   padding: 0;
@@ -30,17 +6,13 @@ td {
   box-sizing: border-box;
 }
 
-div,
-span,
-em,
-p {
+div, span, em, p {
   box-sizing: border-box;
   font-style: normal;
   user-select: none;
 }
 
-html,
-body {
+html, body {
   margin: 0;
   @include wh(100%, 100%);
   @include wh(100vw, 100vh);
@@ -81,11 +53,6 @@ textarea:-ms-input-placeholder {
   @include placeSty();
 }
 
-/*.el-textarea .el-textarea__inner {
-    @include placeSty();
-    color: initial !important;
-}*/
-
 // 伪类清除浮动
 .clearfix {
   &::after {
@@ -106,6 +73,11 @@ textarea:-ms-input-placeholder {
 
 .el-date-editor .el-range-separator {
   width: auto !important;
+}
+
+.p20 {
+  background-color: $themeBgColor;
+  padding: 20px;
 }
 
 // --清除IE下的 search 叉号

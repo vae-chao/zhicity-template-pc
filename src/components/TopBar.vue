@@ -35,7 +35,7 @@
             }
         },
         methods: {
-            // ...mapActions(["getUserInfo"]),
+            ...mapActions(["getUserInfo"]),
             async onLogout() {
                 let token = tokenUtil.getToken();
                 if (token === undefined) {
@@ -75,9 +75,9 @@
             }
         },
         created() {
-            /*this.getUserInfo(() => {
+            this.getUserInfo(() => {
                 this.userInfo = this.$store.state.userInfo;
-            })*/
+            })
         }
     }
 </script>

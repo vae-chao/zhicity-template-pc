@@ -42,7 +42,7 @@ module.exports = {
         open: true,
         proxy: { //反向代理
             '/api': {
-                target: 'http://devznyg.zhiscity.com',
+                target: 'http://devtestznyg.zhiscity.com',
                 changeOrigin: true, //本地会虚拟一个服务端接收你的请求并代你发送该请求
                 secure: false,
             }

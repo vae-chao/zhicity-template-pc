@@ -37,7 +37,7 @@
                         <!-- <span @click="goForgetPass">忘记密码</span> -->
                         <el-button type="text" @click="handleForgetPassword">忘记密码</el-button>
                     </p>
-                    <el-button
+                    <el-button type="primary"
                             :class="['btn',`animated ${shake}`]"
                             class="content_login_loginbtn"
                             @click="btnToLogin()"
@@ -61,18 +61,12 @@
         getSignalDataAPI, //获取各种 私钥  公钥  客户端  签名
     } from "@/request/api.js";
 
-    import rememberPassword from "@/utils/rememberPassword";
-    import {getPublicAndPrivateKey, setPublicAndPrivateKey} from "../../utils/PublicAndPrivateKey";
+    import rememberPassword from "@/utils/rememberPassword.js";
+    import {getPublicAndPrivateKey, setPublicAndPrivateKey} from "../../utils/PublicAndPrivateKey.js";
 
     export default {
         name: "loginNormal",
         props: [],
-        setup() {
-            const siteName = rsaConfig.siteName;
-            return {
-                siteName
-            }
-        },
         data() {
             let checkPhoneForm = [
                 {
@@ -112,7 +106,8 @@
                     password: checkPasswordForm,
                     code: checkCodeForm
                 },
-                isRemember: false // 是否记住密码
+                isRemember: false, // 是否记住密码
+                siteName: rsaConfig.siteName
             };
         },
         methods: {
@@ -213,7 +208,7 @@
                     );
                     this.loading = false;
                     this.$router.push({
-                        name: "List"
+                        name: "DemoIndex"
                     });
                 } catch (e) {
                     this.loading = false;
@@ -379,10 +374,6 @@
                         span:last-child {
                             float: right;
                         }
-
-                        .el-button--text {
-                            color: $themeColor;
-                        }
                     }
 
                     span {
@@ -395,9 +386,6 @@
                     .content_login_loginbtn {
                         font-size: 16px;
                         @include wh(100%, 40px);
-                        background-color: $themeColor;
-                        border-color: $themeColor;
-                        color: $themeBgColor;
                     }
 
                     .code-input {
@@ -438,6 +426,7 @@
                             padding: 0;
                             border: none;
                             background-color: transparent;
+                            text-align: center;
 
                             i {
                                 font-size: 22px;
@@ -468,7 +457,6 @@
                             border: none;
                             background-color: transparent;
                         }
-
                     }
                 }
             }
