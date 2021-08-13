@@ -10,7 +10,7 @@ import RsaUtil from '../utils/RsaUtil.js';
 let refreshTokenState = 0;
 
 import {errorTip} from '../utils/index.js'
-import {getPublicAndPrivateKey} from "../utils/PublicAndPrivateKey";
+import {getPublicAndPrivateKey} from "../utils/PublicAndPrivateKey.js";
 
 /**
  * 封装的axios和ajax 一般用axios足够。如果有jsonp需求可以使用zport的ajax;
@@ -28,20 +28,12 @@ export default async (
 ) => {
     type = type.toUpperCase();
     return new Promise((resolve, reject) => {
-        /*let publicKey = sessionStorage.getItem('publicKey') || '';
-        let privateKey = sessionStorage.getItem('privateKey') || '';
-        let signKey = sessionStorage.getItem('signKey') || '';
-        let clientKey = Base64.decode(sessionStorage.getItem('clientKey')) || '';*/
         let {publicKey, privateKey, signKey, clientKey} = getPublicAndPrivateKey();
 
         const timestamp = new Date().getTime() + '';
         const rsa = new RsaUtil(publicKey, privateKey, signKey, timestamp);
         let rsaParams;
         let rsaObj = {};
-        /*if (contentType !== "application/json;charset=utf-8") {
-            console.log('repeat')
-            params = qs.stringify(params,{arrayFormat: 'repeat'});
-        };*/
         //请求参数是否加密
         if (isSendRsa) {
             rsaObj = rsa.encryptLong(Base64.encode(JSON.stringify(params)));
@@ -81,20 +73,44 @@ export default async (
         })
             .then(res => {
                 res = res.data;
-                if (res.code === 10038) {
-                    if (refreshTokenState === 0) {
-                        refreshTokenState++;
-                        tokenUtil.refreshToken();
+                //刷新token
+                if (res.code === 10035 || res.code === 10038 || res.code === 10039
+                    || res.code === 10023 || res.code === 10026 || res.code === 10028) {
+                    //refreshToken 存在的情况下
+                    if (tokenUtil.getRefreshToken() !== undefined) {
+                        if (refreshTokenState === 0) {
+                            refreshTokenState++;
+                            tokenUtil.refreshToken();
+                        }
+                    } else {
+                        //不存在返回登录
+                        tokenUtil.clearToken();
+                        let url = window.location.href.split("#")[0];
+                        window.location.href = `${url}#/login`;
                     }
                     return;
                 }
-                if (res.code === 10035 || res.code === 10037 || res.code === 10041) {
-                    errorTip("登录过期，请重新登录");
+                //账号异常登录情况
+                if (res.code === 10037 || res.code === 10036) {
                     tokenUtil.clearToken();
                     let url = window.location.href.split("#")[0];
-                    window.location.href = url;
+                    window.location.href = `${url}#/login`;
                     return;
                 }
+                //刷新token过期
+                if (res.code === 10041) {
+                    tokenUtil.clearToken();
+                    let url = window.location.href.split("#")[0];
+                    window.location.href = `${url}#/login`;
+                    return;
+                }
+                //无权访问
+                if (res.code === 10032 || res.code === 10024 || res.code === 10030 ||
+                    res.code === 10029 || res.code === 10031 || res.code === 10040) {
+                    errorTip("无权访问");
+                    return;
+                }
+
                 if (res.de) { // 需要解密
                     if (!res.data) {
                         resolve(res)
@@ -133,18 +149,49 @@ export default async (
                 console.log('err.response', err.response)
                 let errCode = err.response.data.code
 
-                if (errCode === 10038) {
-                    if (refreshTokenState === 0) {
-                        refreshTokenState++;
-                        tokenUtil.refreshToken();
+                if (err.response.status == 504) {
+                    errorTip("网络中断，请重新登录");
+                    //不存在返回登录
+                    tokenUtil.clearToken();
+                    let url = window.location.href.split("#")[0];
+                    window.location.href = `${url}#/login`;
+                    return;
+                }
+                //刷新token
+                if (errCode === 10035 || errCode === 10038 || errCode === 10039 ||
+                    errCode === 10023 || errCode === 10026 || errCode === 10028) {
+                    //refreshToken 存在的情况下
+                    if (tokenUtil.getRefreshToken() !== undefined) {
+                        if (refreshTokenState === 0) {
+                            refreshTokenState++;
+                            tokenUtil.refreshToken();
+                        }
+                    } else {
+                        //不存在返回登录
+                        tokenUtil.clearToken();
+                        let url = window.location.href.split("#")[0];
+                        window.location.href = `${url}#/login`;
                     }
                     return;
                 }
-                if (errCode === 10035 || errCode === 10037 || errCode === 10041 || errCode === 10042 || errCode === 10048) {
-                    errorTip("登录过期，请重新登录");
+                //账号异常登录情况
+                if (errCode === 10037 || errCode === 10036) {
                     tokenUtil.clearToken();
                     let url = window.location.href.split("#")[0];
-                    window.location.href = url;
+                    window.location.href = `${url}#/login`;
+                    return;
+                }
+                //刷新token过期
+                if (errCode === 10041) {
+                    tokenUtil.clearToken();
+                    let url = window.location.href.split("#")[0];
+                    window.location.href = `${url}#/login`;
+                    return;
+                }
+                //无权访问
+                if (errCode === 10032 || errCode === 10024 || errCode === 10030 ||
+                    errCode === 10029 || errCode === 10031 || errCode === 10040) {
+                    errorTip("无权访问");
                     return;
                 }
                 errorTip("系统繁忙，请稍后再试");

@@ -36,3 +36,13 @@ export const userInfoServiceAPI = params => vueRequest({
     isSendRsa: true,
     isUCode: true
 });
+
+// 业务逻辑代码
+export const getTransitPageListAPI = params => vueRequest({
+    apiUrl: `${urlWebHttp}/api/personnelManage/getTransitPageList`,
+    params,
+    type: 'POST',
+    apiCode: '321008',
+    isSendRsa: true,
+    isUCode: true
+});

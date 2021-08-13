@@ -4,14 +4,24 @@
 
         <div class="demo-index p20">
             <ComTable :columns="columns" :data="tableData" :pager="page" :loading="listLoading"
-                      @handleCurrentChange="handleCurrentChange"
+                      @getAjaxMethod="getList"
+                      @handleCurrentChange="handleCurrentChange" @handleSizeChange="handleSizeChange"
                       :header-cell-style="{'background-color': '#E8ECF1', color: '#474747',}">
+                <template slot="table_back">
+                    <el-table-column label="操作">
+                        <template slot-scope="scope">
+                            <el-button>{{scope.row.roleDesc}}</el-button>
+                        </template>
+                    </el-table-column>
+                </template>
             </ComTable>
         </div>
     </div>
 </template>
 
 <script>
+    import {getTransitPageListAPI} from '../../request/api.js';
+
     export default {
         name: 'Index',
         data() {
@@ -29,18 +39,37 @@
                     pageSize: 10,
                     pageSizes: [10, 20, 50],
                     totalCount: 0,
+                    layout: 'total, sizes, prev, pager, next, jumper'
                 },
             }
         },
         methods: {
-            getList() {
-
+            async getList(obj) {
+                console.log('obj',obj)
+                let {params, method} = obj;
+                let {data, code, message} = await getTransitPageListAPI({...params});
+                method({data, code, message});
+                /*if (Number(code) === 0) {
+                    console.log('data', data)
+                    this.tableData = data && data.list;
+                } else {
+                    this.$message.error(message)
+                }*/
             },
             // 翻页处理
             handleCurrentChange(val) {
                 this.page.currentPage = val;
                 this.getList();
             },
+            // 展示条数
+            handleSizeChange(val) {
+                this.page.currentPage = 1;
+                this.page.pageSize = val;
+                this.getList(val);
+            }
+        },
+        created() {
+            // this.getList()
         }
     }
 </script>

@@ -26,11 +26,10 @@
                         :width="item.width"
                         :min-width="item.minWidth"
                         :fixed="item.fixed"
-                        :formatter="item.formatter ? item.formatter : formatterValue"
-                >
+                        :formatter="item.formatter ? item.formatter : formatterValue">
                 </el-table-column>
             </template>
-            <slot name="table_oper"/>
+            <slot name="table_back"/>
         </el-table>
         <el-pagination
                 background
@@ -41,7 +40,7 @@
                 :page-size="pager.pageSize"
                 :page-sizes="pager.pageSizes"
                 :total="pager.totalCount"
-                layout="total, prev, pager, next, jumper">
+                :layout="pager.layout">
         </el-pagination>
     </div>
 </template>
@@ -68,6 +67,7 @@
                         pageSize: 10,
                         pageSizes: [10, 20, 30, 40, 50, 100],
                         totalCount: 0,
+                        layout: 'total, prev, pager, next, jumper'
                     }
                 }
             },
@@ -87,6 +87,19 @@
             headerCellStyle: [Object, Function],
         },
         methods: {
+            getCurrentAjaxMethod() {
+                let params = {};
+                this.$emit('getAjaxMethod', {
+                    params, method: ({data, code, message}) => {
+                        if (Number(code) === 0) {
+                            console.log('data', data)
+                            this.tableData = data && data.list;
+                        } else {
+                            this.$message.error(message)
+                        }
+                    }
+                });
+            },
             handleSelectionChange(val) {
                 this.$emit('handleSelectionChange', val);
             },
@@ -99,6 +112,9 @@
             formatterValue(row, column, cellValue) {
                 return cellValue;
             }
+        },
+        created() {
+            this.getCurrentAjaxMethod();
         }
     };
 </script>
